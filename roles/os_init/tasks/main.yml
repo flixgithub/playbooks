@@ -1,0 +1,8 @@
+---
+# tasks file for rdc server ilom update
+
+- name: os_init step
+  include: os_init.yml
+
+#- name: start to fix vas license empty
+#  include: fix_lic.yml

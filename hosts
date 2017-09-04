@@ -1,0 +1,16 @@
+[pip_install]
+ecnshts3008
+[rdc_ilom_update]
+#ecnshlxrdc001
+ecnshlxrdc002
+#ecnshlxrdc003
+#ecnshlxrdc004
+#ecnshlxrdc005
+#ecnshlxrdc006
+#ecnshlxrdc007
+#ecnshlxrdc008
+#ecnshlxrdc009
+#ecnshlxrdc010
+#ecnshlxrdc011
+[os_init]
+ecnshlx2017

@@ -1,0 +1,8 @@
+---
+# tasks file for pip install python packages
+
+- name: install python with pip 
+  include: manage_pip_package.yml
+
+#- name: start to fix vas license empty
+#  include: fix_lic.yml

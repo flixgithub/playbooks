@@ -1,0 +1,8 @@
+---
+# tasks file for solaris server vas license file check 
+
+- name: start to check vas license
+  include: check_vas_license.yml
+
+#- name: start to fix vas license empty
+#  include: fix_lic.yml

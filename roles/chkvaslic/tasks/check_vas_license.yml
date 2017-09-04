@@ -1,0 +1,17 @@
+---
+- hosts: solaris_vas_lic
+  remote_user: root
+  #vars:
+  #  jdk_version: 1.8.0_74
+  tasks:
+    - name: check vas license file on solaris server
+      stat: path=/etc/opt/quest/vas/.licenses/VAS_license_153-47083
+      register: st
+    - debug:
+        msg: "license file does not exists"
+      when: st.stat.exists == False
+    - debug:
+        msg: "invalid license exists"
+      when: st.stat.size == 0
+      
+

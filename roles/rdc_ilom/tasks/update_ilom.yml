@@ -1,0 +1,42 @@
+---
+- hosts: rdc_ilom_update
+  remote_user: root
+  #vars:
+  #  jdk_version: 1.8.0_74
+  tasks:
+    - name: copy ilo4 rpm file to /tmp
+      command: cp /proj/hpadmin/zone/kfc/yan/hp-firmware-ilo4-2.54-1.1.i386.rpm /tmp/
+      tags:
+        - copy
+    - name: check if OS is redhat 6 and install
+      shell: rpm -ivh /tmp/hp-firmware-ilo4-2.54-1.1.i386.rpm
+      when:
+        - ansible_distribution == 'RedHat'
+        - ansible_distribution_major_version == '6'
+      tags:
+         - check
+    - name: try to install package
+      shell: sh /usr/lib/i386-linux-gnu/hp-scexe-compat/CP032620.scexe
+      register: ilom_installed
+      #ignore_errors: True
+      failed_when: False 
+      #"'FAILED' in ilom_installed.stderr"
+      when:
+        - ansible_distribution == 'RedHat'
+        - ansible_distribution_major_version == '6'
+      tags:
+        - test_install
+    - name: install package if not installed
+      shell: yes | sh /usr/lib/i386-linux-gnu/hp-scexe-compat/CP032620.scexe
+      when: ilom_installed.stdout.find('same firmware version') == -1
+      tags:
+        - install
+    #- name: installed or not
+    #  fail: 
+    #    msg="{{ ilom_installed.stderr }}"
+      #when: ilom_installed.stdout.find('ERROR') != -1
+    #  tags:
+    #     - fail
+    #- debug: var="{{ ilom_installed.stdout }}"
+    #  tags:
+    #    - fail

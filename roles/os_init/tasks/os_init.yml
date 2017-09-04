@@ -1,0 +1,29 @@
+---
+- hosts: os_init
+  remote_user: root
+  #vars:
+  tasks:
+    - name: export ITTE HUB http_proxy
+      shell: export http_proxy=hubproxy.sh.cn.ao.ericsson.se
+      tags:
+        - proxy
+    - name: check if OS is SLES11 and install puppet
+      shell: wget http://cnsheis0011.sh.cn.ao.ericsson.se/customrepo/eis/{{ ansible_distribution|lower }}/{{ ansible_distribution_major_version }}/{{ ansible_machine }}/eispuppet-3.3.1-9.suse11.x86_64.rpm; rpm -ivh eispuppet-3.3.1-9.suse11.x86_64.rpm
+      when:
+        - ansible_distribution == 'SLES'
+        - ansible_distribution_major_version == '11'
+      tags:
+        - suse11   
+    - name: check if OS is SLES12 and install puppet
+      shell: >
+        wget http://cnsheis0011.sh.cn.ao.ericsson.se/customrepo/eis/{{ ansible_distribution|lower }}/{{ ansible_distribution_major_version }}/{{ ansible_machine }}/eispuppet-3.7.3-1.sle12.x86_64.rpm;
+        rpm -ivh eispuppet-3.7.3-1.sle12.x86_64.rpm;
+        ln -s /opt/puppet/bin/puppet /usr/bin/puppet;
+        mkdir -p /etc/facter/facts.d/; 
+        touch /etc/facter/facts.d/ericsson.txt;echo 'site=cnsh' > /etc/facter/facts.d/ericsson.txt 
+      ignore_errors: True
+      when:
+        - ansible_distribution == 'SLES'
+        - ansible_distribution_major_version == '12'
+      tags:
+        - suse12

@@ -1,0 +1,27 @@
+---
+- hosts: pip_install
+  remote_user: root
+  #vars:
+  #  jdk_version: 1.8.0_74
+  vars_files:
+    - ../vars/pip_vars.yml
+  tasks:
+#    - name: upgrade pip version
+#      command: pip install --upgrade pip
+    - name: check if pylint already exists
+      command: pip show pylint > /dev/null ; echo $?
+      register: package_check
+    - debug:
+        msg="package_check {{ package_check.stdout}}" 
+    - debug: 
+        var="return code is {{ package_check.rc }}"
+      when: package_check.rc == 0
+
+#    - name: uninstall first if package already exists 
+#      pip: name=pylint state=absent
+#      when: package_check.rc == 0
+#    - debug: msg="{{ item['package_name'] }} and {{ item['version'] }}"
+#      with_items: package_info  
+#    - name: install python packages
+#      pip: name={{ item.package_name }} version={{ item.version }}
+#      with_items: package_info
