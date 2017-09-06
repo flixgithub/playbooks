@@ -10,13 +10,14 @@
     url: "{{ eis_repo_url }}/{{ ansible_distribution|lower }}/{{ ansible_distribution_major_version }}/{{ ansible_machine }}/eispuppet-3.3.1-9.suse11.x86_64.rpm"
     dest: /tmp/eispuppet-3.3.1-9.suse11.x86_64.rpm
 - name: install the puppet rpm file
-  yum:
+  zypper:
     name: /tmp/eispuppet-3.3.1-9.suse11.x86_64.rpm
     state: present
 - name: create link to puppet file
   file:
     src: /opt/puppet/bin/puppet
     dest: /usr/bin/puppet
+    state: link
 - name: create facts.d directory
   file:
     path: /etc/facter/facts.d/

@@ -15,6 +15,7 @@
   file:
     src: /opt/puppet/bin/puppet
     dest: /usr/bin/puppet
+    state: link
 - name: create facts.d directory
   file:
     path: /etc/facter/facts.d/
