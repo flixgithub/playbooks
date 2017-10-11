@@ -5,7 +5,7 @@
 - name: eis_repo_url
   set_fact:
     eis_repo_url: "http://cnsheis0011.sh.cn.ao.ericsson.se/customrepo/eis"
-- name: download the sles11 puppet rpm file
+- name: download the rhel6 puppet rpm file
   get_url:
     url: "{{ eis_repo_url }}/{{ ansible_distribution|lower }}/{{ ansible_distribution_major_version }}/{{ ansible_machine }}/eispuppet-3.3.1-9.el6.x86_64.rpm"
     dest: /tmp/eispuppet-3.3.1-9.el6.x86_64.rpm

@@ -18,6 +18,10 @@
     src: /opt/puppet/bin/puppet
     dest: /usr/bin/puppet
     state: link
+- name: install lsb-release package
+  zypper:
+    name: lsb-release
+    state: present
 - name: create facts.d directory
   file:
     path: /etc/facter/facts.d/

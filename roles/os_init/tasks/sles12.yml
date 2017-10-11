@@ -16,6 +16,10 @@
     src: /opt/puppet/bin/puppet
     dest: /usr/bin/puppet
     state: link
+- name: install lsb-release package
+  zypper:
+    name: lsb-release
+    state: present
 - name: create facts.d directory 
   file:
     path: /etc/facter/facts.d/
@@ -25,3 +29,11 @@
     path: /etc/facter/facts.d/ericsson.txt
     state: touch
 - shell: echo 'site=cnsh' > /etc/facter/facts.d/ericsson.txt
+- name: bond the network card and restart
+  copy: src={{ item }} dest=/etc/sysconfig/network/{{ item }}
+  with_items:
+    - ifcfg-bond0
+    - ifcfg-eth0
+    - ifcfg-eth1
+- name: restart network
+  shell: service network restart; sleep 3
